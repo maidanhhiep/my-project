@@ -11,7 +11,7 @@ export class CouponsController {
     @Get()
     async getCoupons() {
         const coupons = await this.couponsService.getCoupons();
-        return coupons
+        return JSON.stringify(coupons)
     }
 
     @UseGuards(JwtAuthGuard)
