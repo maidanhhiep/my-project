@@ -19,7 +19,7 @@ export const StoreSchema = new mongoose.Schema({
     net_type: { type: String, index: true },
     bing_cp: { type: Boolean, index: true, default: false },
     merchant_id: { type: Number, index: true },
-    coupon_added: { type: Number }
+    coupon_added: { type: Number, default: 0 }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 
 export interface Store {
