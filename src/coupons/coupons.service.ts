@@ -39,11 +39,11 @@ export class CouponsService {
         const newCoupon = new this.couponModel(reqData);
         try {
             const store = await this.storesService.getStores({ store_name: reqData.forStore })
-            console.log(111, JSON.stringify(store))
             if (!store || (store && store.status == 404)) {
-                throw new Error('404 | Store does not exist')
+                throw new HttpException('Store does not exist', 404)
             }
-            const coupon = await newCoupon.save();
+            const coupon = await this.couponModel.create(newCoupon);
+            const updateStore = await this.storesService.updateStore(store[0]._id, { coupon_added: +store[0].coupon_added + 1 })
             return coupon;
         } catch (error) {
             return (error);
@@ -53,7 +53,10 @@ export class CouponsService {
     async deleteCoupon(couponId: String) {
         let id = couponId;
         try {
+            const coupon = await this.couponModel.findById(id);
             const result = await this.couponModel.remove({ _id: id });
+            const store = await this.storesService.getStores({ store_name: coupon.forStore })
+            const updateStore = await this.storesService.updateStore(store[0]._id, { coupon_added: +store[0].coupon_added - 1 })
             return result;
         } catch (error) {
             return error;

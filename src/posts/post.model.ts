@@ -11,7 +11,8 @@ export const PostSchema = new mongoose.Schema({
     medias: { type: Number },
     content: { type: String },
     type: { type: String },
-    id: { type: Number, index: true, unique: true }
+    id: { type: Number, index: true, unique: true },
+    forStore: { type: String, required: true, index: true },
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 
 export interface Post {
@@ -25,4 +26,5 @@ export interface Post {
     content?: String;
     type?: String;
     id?: Number;
+    forStore?: String;
 }

@@ -1,11 +1,15 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Post } from './post.model';
+import { StoresService } from 'src/stores/stores.service';
 
 @Injectable()
 export class PostsService {
-    constructor(@InjectModel('Post') private postModel: Model<Post>) { }
+    constructor(
+        @InjectModel('Post') private postModel: Model<Post>,
+        @Inject(forwardRef(() => StoresService)) private readonly storesService: StoresService
+    ) { }
 
     async getPosts(reqData: Post) {
         try {
@@ -34,6 +38,10 @@ export class PostsService {
         console.log(reqData);
         const newPost = new this.postModel(reqData);
         try {
+            const store = await this.storesService.getStores({ store_name: reqData.forStore })
+            if (!store || (store && store.status == 404)) {
+                throw new HttpException('Store does not exist', 404)
+            }
             const post = await newPost.save();
             return post;
         } catch (error) {

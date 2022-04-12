@@ -19,7 +19,8 @@ export const KeywordSchema = new mongoose.Schema({
     phones: { type: Array, default: [] },
     addresses: { type: Array, },
     tag_id: { type: mongoose.Schema.Types.ObjectId, default: null, index: true },
-    also_ask: { type: Array }
+    also_ask: { type: Array },
+    forStore: { type: String, required: true, index: true },
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 
 export interface Keyword {
@@ -41,4 +42,5 @@ export interface Keyword {
     addresses?: Array<any>;
     tag_id?: String;
     also_ask?: Array<any>;
+    forStore?: String;
 }

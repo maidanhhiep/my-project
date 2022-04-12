@@ -19,6 +19,7 @@ export const StoreSchema = new mongoose.Schema({
     net_type: { type: String, index: true },
     bing_cp: { type: Boolean, index: true, default: false },
     merchant_id: { type: Number, index: true },
+    coupon_added: { type: Number }
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 
 export interface Store {
@@ -39,4 +40,5 @@ export interface Store {
     net_type?: String;
     bing_cp?: Boolean;
     merchant_id?: Number;
+    coupon_added?: Number;
 }
