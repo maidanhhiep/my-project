@@ -9,8 +9,8 @@ export class KeywordsController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
-    async getKeywords() {
-        const keywords = await this.keywordsService.getKeywords();
+    async getKeywords(@Query() query) {
+        const keywords = await this.keywordsService.getKeywords(query);
         return JSON.stringify(keywords)
     }
 

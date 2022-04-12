@@ -9,6 +9,7 @@ import { StoresService } from './stores.service';
     MongooseModule.forFeature([{ name: 'Store', schema: StoreSchema }])
   ],
   controllers: [StoresController],
-  providers: [StoresService]
+  providers: [StoresService],
+  exports: [StoresService]
 })
-export class StoresModule {}
+export class StoresModule { }

@@ -7,11 +7,17 @@ import { Store } from './store.model';
 export class StoresService {
     constructor(@InjectModel('Store') private storeModel: Model<Store>) { }
 
-    getStores(): Promise<any> {
-        return new Promise(resolve => {
-            const store = this.storeModel.find();
-            resolve(store);
-        })
+    async getStores(reqData: Store) {
+        try {
+            const store = await this.storeModel.find(reqData);
+            if (!store || (store && store.length == 0)) {
+                throw new HttpException('Store does not exist', 404)
+            }
+            console.log('Store',store)
+            return store;
+        } catch (error) {
+            return error
+        }
     }
 
     getStore(storeId: String): Promise<any> {

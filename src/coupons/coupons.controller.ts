@@ -9,8 +9,8 @@ export class CouponsController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
-    async getCoupons() {
-        const coupons = await this.couponsService.getCoupons();
+    async getCoupons(@Query() query) {
+        const coupons = await this.couponsService.getCoupons(query);
         return JSON.stringify(coupons)
     }
 

@@ -9,8 +9,8 @@ export class StoresController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
-    async getStores() {
-        const stores = await this.storesService.getStores();
+    async getStores(@Query() query) {
+        const stores = await this.storesService.getStores(query);
         return JSON.stringify(stores)
     }
 

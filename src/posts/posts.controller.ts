@@ -8,8 +8,8 @@ export class PostsController {
     constructor(private postsService: PostsService) { }
     @UseGuards(JwtAuthGuard)
     @Get()
-    async getPosts() {
-        const posts = await this.postsService.getPosts();
+    async getPosts(@Query() query) {
+        const posts = await this.postsService.getPosts(query);
         return JSON.stringify(posts)
     }
 

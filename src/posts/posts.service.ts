@@ -7,11 +7,16 @@ import { Post } from './post.model';
 export class PostsService {
     constructor(@InjectModel('Post') private postModel: Model<Post>) { }
 
-    getPosts(): Promise<any> {
-        return new Promise(resolve => {
-            const post = this.postModel.find()
-            resolve(post);
-        });
+    async getPosts(reqData: Post) {
+        try {
+            const post = await this.postModel.find(reqData);
+            if (!post || (post && post.length == 0)) {
+                throw new Error('404 | Post does not exist')
+            }
+            return post;
+        } catch (error) {
+            return error
+        }
     }
 
     getPost(postId: String): Promise<any> {

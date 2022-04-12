@@ -7,11 +7,16 @@ import { Keyword } from './keyword.model';
 export class KeywordsService {
     constructor(@InjectModel('Keyword') private keywordModel: Model<Keyword>) { }
 
-    getKeywords(): Promise<any> {
-        return new Promise(resolve => {
-            const keyword = this.keywordModel.find();
-            resolve(keyword);
-        })
+    async getKeywords(reqData: Keyword) {
+        try {
+            const keyword = await this.keywordModel.find(reqData);
+            if (!keyword || (keyword && keyword.length == 0)) {
+                throw new Error('404 | Keyword does not exist')
+            }
+            return keyword;
+        } catch (error) {
+            return error
+        }
     }
 
     getKeyword(keywordId: String): Promise<any> {

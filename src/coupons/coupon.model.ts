@@ -21,7 +21,6 @@ export const CouponSchema = new mongoose.Schema({
     like_up: { type: Number, default: 0, index: true },
     like_down: { type: Number, default: 0, index: true },
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
-CouponSchema.set('toJSON', { getters: true });
 export interface Coupon {
     coupon_name?: String;
     coupon_slug?: String;
